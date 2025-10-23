@@ -1,10 +1,13 @@
 ﻿using Application.Interfaces;
 using Application.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Taller.Attributes;
 
 namespace Taller.Controllers
 {
     [Route("v1/[Controller]")]
+    [Authorize(AuthenticationSchemes = CustomHeaderAuthenticationOptions.DefaultScheme)]
     public class EmployeesController(IEmployeeService employeeService) : BaseController
     {
         [HttpPost]

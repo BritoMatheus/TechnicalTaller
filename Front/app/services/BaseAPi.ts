@@ -6,6 +6,7 @@ const BaseApi = axios.create({
   baseURL: "https://localhost:44325/",
   headers: {
     'Content-Type': 'application/json',
+    'Authorization': 'employee',
   },
 });
 

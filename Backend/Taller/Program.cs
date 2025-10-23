@@ -2,6 +2,7 @@ using Application.Interfaces;
 using Application.Services;
 using Domain.Interfaces;
 using Repository.Repositories;
+using Taller.Attributes;
 using Taller.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(CustomHeaderAuthenticationOptions.DefaultScheme)
+    .AddScheme<CustomHeaderAuthenticationOptions, CustomHeaderAuthenticationHandler>(
+        CustomHeaderAuthenticationOptions.DefaultScheme,
+        options =>
+        {
+            options.HeaderName = "Authorization";
+        });
 builder.Services.AddCors(o => o.AddPolicy("Cors", builder =>
 {
     builder.AllowAnyOrigin()
@@ -33,8 +41,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseErrorHandler();
 
